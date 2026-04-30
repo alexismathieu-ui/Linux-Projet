@@ -122,7 +122,15 @@ else
 fi
 
 # B) header .h manquant
-if ! compgen -G "*.h" >/dev/null; then
+has_header=0
+for h in *.h; do
+  if [ -f "$h" ]; then
+    has_header=1
+    break
+  fi
+done
+
+if [ "$has_header" -eq 0 ]; then
   MALUS=$((MALUS + 2))
   echo "[Malus header manquant] OUI -> -2 (malus: $MALUS)"
 else
